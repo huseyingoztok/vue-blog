@@ -1,9 +1,15 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-
+import PostList from '@/views/PostList.vue';
 Vue.use(VueRouter);
 
-const routes = [];
+const routes = [
+  {
+    path: '/',
+    name: 'post-list',
+    component: PostList
+  }
+];
 
 const router = new VueRouter({
   mode: 'history',

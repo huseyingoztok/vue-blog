@@ -29,7 +29,8 @@ const request = {
 
 const Posts = {
   list: (page, limit) => apiClient.get(`/posts?_page=${page}&_limit=${limit}`),
-  get: id => request.get(`/posts/${id}`)
+  get: id => request.get(`/posts/${id}`),
+  create: post => request.post('/posts', post)
 };
 
 export default {

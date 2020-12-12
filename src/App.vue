@@ -10,7 +10,7 @@
           Reload components when the URL changes, including query parameters
 
           ** Storelardaki modullerin kullanılabilmesi için namespaced'ı trueya çekmek gerekiyor.
-          ** Başka bir modüle ait mutation başka bir modülden çağrılmamalıdır...
+          ** Başka bir modüle ait mut ation başka bir modülden çağrılmamalıdır...
           ** Mutationlar yalnızca kendi modülünde bulunan actionlar tarafından çağrılmalıdır... 
 
           /*
@@ -20,15 +20,18 @@
           */
         -->
       </div>
+      <NotificationContainer />
     </b-container>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import NotificationContainer from './components/NotificationContainer.vue';
 export default {
   components: {
-    Navbar
+    Navbar,
+    NotificationContainer
   }
 };
 </script>

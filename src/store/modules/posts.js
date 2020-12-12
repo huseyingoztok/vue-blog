@@ -14,23 +14,63 @@ export default {
     },
     UPDATE_POST(state, payload) {
       state.post = payload;
+    },
+    PUSH_POSTS(state, payload) {
+      state.posts.push(payload);
     }
   },
   actions: {
-    fetchPosts(context, { currentPage, perPage }) {
-      http.Posts.list(currentPage, perPage).then(response => {
-        context.commit('UPDATE_POSTS_AND_ROWS', { posts: response.data, rows: response.headers['x-total-count'] });
-      });
+    createPost({ commit, dispatch }, post) {
+      return http.Posts.create(post)
+        .then(() => {
+          commit('PUSH_POSTS', post);
+          const notification = {
+            type: 'success',
+            text: `Post created successfully`
+          };
+          dispatch('notifications/add', notification, { root: true });
+        })
+        .catch(error => {
+          console.log(error);
+          const notification = {
+            type: 'error',
+            text: `Problem was creating post: ${error.message}`
+          };
+          dispatch('notifications/add', notification, { root: true });
+          throw error;
+        });
     },
-    fetchPost({ commit, getters }, id) {
+    fetchPosts({ commit, dispatch }, { currentPage, perPage }) {
+      // context = { commit, dispatch, getters, rootState, state }
+      http.Posts.list(currentPage, perPage)
+        .then(response => {
+          commit('UPDATE_POSTS_AND_ROWS', { posts: response.data, rows: response.headers['x-total-count'] });
+        })
+        .catch(error => {
+          const notification = {
+            type: 'error',
+            text: `Problem was fetching posts: ${error.message}`
+          };
+          dispatch('notifications/add', notification, { root: true });
+        });
+    },
+    fetchPost({ commit, getters, dispatch }, id) {
       const post = getters.getPostById(id);
       if (post) {
         commit('UPDATE_POST', post);
         return;
       }
-      http.Posts.get(id).then(post => {
-        commit('UPDATE_POST', post);
-      });
+      http.Posts.get(id)
+        .then(post => {
+          commit('UPDATE_POST', post);
+        })
+        .catch(error => {
+          const notification = {
+            type: 'error',
+            text: `Problem was fetching post: ${error.message}`
+          };
+          dispatch('notifications/add', notification, { root: true });
+        });
     }
   },
   getters: {

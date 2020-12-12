@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import PostList from '@/views/PostList.vue';
 import PostDetail from '@/views/PostDetail.vue';
+import CreatePost from '@/views/CreatePost.vue';
 Vue.use(VueRouter);
 
 const routes = [
@@ -14,6 +15,11 @@ const routes = [
     path: '/post-detail/:id',
     name: 'post-detail',
     component: PostDetail
+  },
+  {
+    path: '/create',
+    name: 'post-create',
+    component: CreatePost
   }
 ];
 

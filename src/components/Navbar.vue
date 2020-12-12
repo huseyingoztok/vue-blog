@@ -1,6 +1,6 @@
 <template>
   <b-navbar toggleable="lg" type="dark" variant="success">
-    <b-navbar-brand href="#">V-Blog</b-navbar-brand>
+    <b-navbar-brand to="/">V-Blog</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

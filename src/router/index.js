@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import PostList from '@/views/PostList.vue';
+import PostDetail from '@/views/PostDetail.vue';
 Vue.use(VueRouter);
 
 const routes = [
@@ -8,6 +9,11 @@ const routes = [
     path: '/',
     name: 'post-list',
     component: PostList
+  },
+  {
+    path: '/post-detail/:id',
+    name: 'post-detail',
+    component: PostDetail
   }
 ];
 

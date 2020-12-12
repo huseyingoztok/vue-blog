@@ -1,6 +1,11 @@
 <template>
   <div class="mb-3">
-    <b-card cols :title="post.title" header-tag="header" footer-tag="footer">
+    <b-card header-tag="header" footer-tag="footer">
+      <div class="card-title">
+        <router-link :to="{ name: 'post-detail', params: { id: post.id } }"
+          ><h4>{{ post.title }}</h4></router-link
+        >
+      </div>
       <template #header>
         <h6 class="mb-0">{{ post.user }}</h6>
       </template>

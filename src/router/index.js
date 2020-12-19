@@ -3,6 +3,8 @@ import VueRouter from 'vue-router';
 import PostList from '@/views/PostList.vue';
 import PostDetail from '@/views/PostDetail.vue';
 import CreatePost from '@/views/CreatePost.vue';
+import nProgress from 'nprogress';
+import store from '@/store/index';
 Vue.use(VueRouter);
 
 const routes = [
@@ -14,7 +16,15 @@ const routes = [
   {
     path: '/post-detail/:id',
     name: 'post-detail',
-    component: PostDetail
+    component: PostDetail,
+    props: true,
+    beforeEnter(routeTo, routeFrom, next) {
+      store.dispatch('posts/fetchPost', routeTo.params.id).then(post => {
+        routeTo.params.post = post;
+        nProgress.done();
+        next();
+      });
+    }
   },
   {
     path: '/create',
@@ -27,6 +37,11 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((routeTo, routeFrom, next) => {
+  nProgress.start();
+  next();
 });
 
 export default router;

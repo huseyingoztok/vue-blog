@@ -58,11 +58,12 @@ export default {
       const post = getters.getPostById(id);
       if (post) {
         commit('UPDATE_POST', post);
-        return;
+        return post;
       }
-      http.Posts.get(id)
+      return http.Posts.get(id)
         .then(post => {
           commit('UPDATE_POST', post);
+          return post;
         })
         .catch(error => {
           const notification = {

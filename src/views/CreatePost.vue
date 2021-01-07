@@ -43,8 +43,8 @@ export default {
   methods: {
     ...mapActions('posts', ['createPost']),
     onSubmit() {
-      this.createPost(this.form).then(() => {
-        this.$router.push('/');
+      this.createPost(this.form).then(post => {
+        this.$router.push({ name: 'post-detail', params: { id: post.id } });
       });
     }
   }

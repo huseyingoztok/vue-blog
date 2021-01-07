@@ -22,13 +22,14 @@ export default {
   actions: {
     createPost({ commit, dispatch }, post) {
       return http.Posts.create(post)
-        .then(() => {
+        .then(response => {
           commit('PUSH_POSTS', post);
           const notification = {
             type: 'success',
             text: `Post created successfully`
           };
           dispatch('notifications/add', notification, { root: true });
+          return response;
         })
         .catch(error => {
           console.log(error);

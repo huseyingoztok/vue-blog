@@ -17,7 +17,7 @@ const routes = [
     path: '/post-detail/:id',
     name: 'post-detail',
     component: PostDetail,
-    props: true,
+    props: true, //parametreyi props olarak geç
     beforeEnter(routeTo, routeFrom, next) {
       store.dispatch('posts/fetchPost', routeTo.params.id).then(post => {
         routeTo.params.post = post;
@@ -42,6 +42,10 @@ const router = new VueRouter({
 router.beforeEach((routeTo, routeFrom, next) => {
   nProgress.start();
   next();
+});
+
+router.afterEach(() => {
+  nProgress.done();
 });
 
 export default router;

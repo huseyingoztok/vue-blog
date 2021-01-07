@@ -3,6 +3,8 @@ import VueRouter from 'vue-router';
 import PostList from '@/views/PostList.vue';
 import PostDetail from '@/views/PostDetail.vue';
 import CreatePost from '@/views/CreatePost.vue';
+import NotFound from '@/views/NotFound.vue';
+import NetworkIssues from '@/views/NetworkIssues.vue';
 import nProgress from 'nprogress';
 import store from '@/store/index';
 Vue.use(VueRouter);
@@ -19,17 +21,40 @@ const routes = [
     component: PostDetail,
     props: true, //parametreyi props olarak geç
     beforeEnter(routeTo, routeFrom, next) {
-      store.dispatch('posts/fetchPost', routeTo.params.id).then(post => {
-        routeTo.params.post = post;
-        nProgress.done();
-        next();
-      });
+      store
+        .dispatch('posts/fetchPost', routeTo.params.id)
+        .then(post => {
+          routeTo.params.post = post;
+          nProgress.done();
+          next();
+        })
+        .catch(err => {
+          if (err && err.response && err.response.status === 404) {
+            next({ name: '404', params: { resource: 'Event' } });
+          }
+          next({ name: 'networkissues' });
+        });
     }
   },
   {
     path: '/create',
     name: 'post-create',
     component: CreatePost
+  },
+  {
+    path: '/404',
+    name: '404',
+    props: true,
+    component: NotFound
+  },
+  {
+    path: '/networkissues',
+    name: 'networkissues',
+    component: NetworkIssues
+  },
+  {
+    path: '*',
+    redirect: { name: '404' }
   }
 ];
 

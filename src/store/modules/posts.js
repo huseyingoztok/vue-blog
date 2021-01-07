@@ -55,24 +55,23 @@ export default {
           dispatch('notifications/add', notification, { root: true });
         });
     },
-    fetchPost({ commit, getters, dispatch }, id) {
+    fetchPost({ commit, getters }, id) {
       const post = getters.getPostById(id);
       if (post) {
         commit('UPDATE_POST', post);
         return post;
       }
-      return http.Posts.get(id)
-        .then(post => {
-          commit('UPDATE_POST', post);
-          return post;
-        })
-        .catch(error => {
-          const notification = {
-            type: 'error',
-            text: `Problem was fetching post: ${error.message}`
-          };
-          dispatch('notifications/add', notification, { root: true });
-        });
+      return http.Posts.get(id).then(post => {
+        commit('UPDATE_POST', post);
+        return post;
+      });
+      // .catch(error => {
+      //   const notification = {
+      //     type: 'error',
+      //     text: `Problem was fetching post: ${error.message}`
+      //   };
+      //   dispatch('notifications/add', notification, { root: true });
+      // });
     }
   },
   getters: {

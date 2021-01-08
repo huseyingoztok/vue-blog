@@ -6,6 +6,7 @@ import CreatePost from '@/views/CreatePost.vue';
 import NotFound from '@/views/NotFound.vue';
 import NetworkIssues from '@/views/NetworkIssues.vue';
 import Example from '@/views/Example.vue';
+import Filters from '@/views/Filters.vue';
 import nProgress from 'nprogress';
 import store from '@/store/index';
 Vue.use(VueRouter);
@@ -57,6 +58,11 @@ const routes = [
     path: '/example',
     name: 'example',
     component: Example
+  },
+  {
+    path: '/filters',
+    name: 'filters',
+    component: Filters
   },
   {
     path: '*',
